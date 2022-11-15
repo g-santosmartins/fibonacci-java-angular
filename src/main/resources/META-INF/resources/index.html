@@ -14,23 +14,23 @@
 
       //Controller Part
       app.controller("AlticciSequenceController", function ($scope, $http) {
+        const DEBUG = false;
 
         $scope.form = {
-          param: 4,
+          param: 11,
           result: ""
         };
 
         //First load the info from the server
-        _refreshPageData();
+        _handleGetNumber();
 
-        //HTTP POST methods for add fruits
+        //HTTP POST 
         $scope.add = function () {
-        _refreshPageData();
+        _handleGetNumber();
         };
 
         /* Private Methods */
-        //HTTP GET- get all fruits collection
-        function _refreshPageData() {
+        function _handleGetNumber() {
           const validation = _handleValidateRequestParam($scope.form.param)
           if(!validation) {
             alert("Try to input a number instead of a letter(s)")
@@ -40,8 +40,11 @@
             method: 'GET',
             url: `/v1/alticci/${$scope.form.param}`,
           }).then(function successCallback(response) {
-            $scope.form.result = response.data;
-            console.log(response)
+            const {result, error, success} = response.data
+            if(result) {
+              $scope.form.result = result;
+            }
+           if(DEBUG)console.log(response)
           }, function errorCallback(response) {
             alert("Ops, something went wrong, we're trying to fix it, please try again later")
             _clearForm();
@@ -50,7 +53,7 @@
         }
 
         function _success(response) {
-          _refreshPageData();
+          _handleGetNumber();
           _clearForm();
         }
 
