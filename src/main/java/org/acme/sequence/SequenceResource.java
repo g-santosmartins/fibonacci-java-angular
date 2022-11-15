@@ -1,10 +1,8 @@
 package org.acme.sequence;
 
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-
 
 @Path("v1")
 public class SequenceResource {
