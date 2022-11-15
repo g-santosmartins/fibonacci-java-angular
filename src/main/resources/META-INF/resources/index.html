@@ -1,8 +1,11 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8"/>
-    <title>Fruit REST service</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alticci Sequence Rest</title>
+    <!-- Load wing css lib -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/wingcss/0.1.8/wing.min.css"/>
     <!-- Load AngularJS -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -12,47 +15,36 @@
       //Controller Part
       app.controller("AlticciSequenceController", function ($scope, $http) {
 
-        //Initialize page with default data which is blank in this example
-        $scope.fruits = [];
-
         $scope.form = {
-          param: 1,
+          param: 4,
           result: ""
         };
 
-        //Now load the data from server
+        //First load the info from the server
         _refreshPageData();
 
         //HTTP POST methods for add fruits
         $scope.add = function () {
-          var data = { "param": $scope.form.param };
-          function _refreshPageData() {
-          $http({
-            method: "GET",
-            url: `/alticci/${$scope.form.param}`,
-            // data: angular.toJson(data),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }).then(function successCallback(response) {
-            $scope.form.result = response.data;
-            console.log(response.data)
-          }, function errorCallback(response) {
-            console.log(response.statusText);
-          });;
-        }
-        
-      };
+        _refreshPageData();
+        };
 
         /* Private Methods */
         //HTTP GET- get all fruits collection
         function _refreshPageData() {
+          const validation = _handleValidateRequestParam($scope.form.param)
+          if(!validation) {
+            alert("Try to input a number instead of a letter(s)")
+            return
+          }
           $http({
             method: 'GET',
-            url: `/alticci/${$scope.form.param}`,
+            url: `/v1/alticci/${$scope.form.param}`,
           }).then(function successCallback(response) {
-            $scope.form.result = response;
+            $scope.form.result = response.data;
+            console.log(response)
           }, function errorCallback(response) {
+            alert("Ops, something went wrong, we're trying to fix it, please try again later")
+            _clearForm();
             console.log(response.statusText);
           });
         }
@@ -66,6 +58,11 @@
           alert(response.data.message || response.statusText);
         }
 
+        function _handleValidateRequestParam(param) {
+          if(typeof Number(param) === "undefined" ) return false
+          return true
+        }
+
         //Clear the form
         function _clearForm() {
           $scope.form.param = "";
@@ -77,24 +74,25 @@
 <body ng-app="AlticciSequence" ng-controller="AlticciSequenceController">
 
 <div class="container">
-    <h1>REST Service - Alticci Sequence Generator</h1>
+    <h1>REST Service - Alticci Sequence Number Generator</h1>
 
-    <h3>Add a number to generate a sequence</h3>
+    <h3>Add a index to generate a number from the sequence:</h3>
     <form ng-submit="add()">
         <div class="row">
-            <div class="col-12"><input type="text" placeholder="Name" ng-model="form.param" size="60"/></div>
+            <div class="col-12"><input type="text"  placeholder="Gladly input your number here" ng-model="form.param" size="60"/></div>
         </div>
-        <input type="submit" value="Generate"/>
+        <input type="submit" value="Generate number"/>
     </form>
 
-    <h3>Alticci Sequence</h3>
-    <!-- <div class="row">
-        <div class="col-4">Param</div>
-        <div class="col-8">Description</div>
-    </div> -->
+    <h3>Results</h3>
     <div class="row">
-        <div class="col-4" ng-model="form.result"></div>
-        <!-- <div class="col-8">{{ fruit.description }}</div> -->
+        <div class="col-4">Choosen number </div>
+        <div class="col-4">Result number</div>
+    </div>
+    <div class="row">
+      <h4 class="col-4" ng-model="form.param"> {{ form.param}}</h4>
+      <h4 class="col-4" ng-model="form.result"> {{ form.result}}</h4>
+      <slider></slider>
     </div>
 </div>
 
