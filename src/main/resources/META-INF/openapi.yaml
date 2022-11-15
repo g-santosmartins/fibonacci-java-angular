@@ -1,0 +1,9 @@
+openapi: 3.0.1
+info:
+  title: Alticci Sequence Open Api resource
+  description: An open Api Rest to generate alticci custom fibonacci results
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:8080/api-docs
+    description: Development server mode selected
