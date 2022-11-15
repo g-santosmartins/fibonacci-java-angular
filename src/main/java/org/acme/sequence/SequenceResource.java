@@ -12,6 +12,7 @@ public class SequenceResource {
     @Path("/alticci/{param}")
     // @Produces(MediaType.APPLICATION_JSON)
     public Long squenceService(@PathParam("param") int param) {
+        if(param == 0L) return 0L;
         long result = new SequenceService().produceSequence(param);
         return result; 
     }

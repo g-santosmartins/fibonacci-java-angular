@@ -3,11 +3,9 @@ package org.acme.sequence;
 public class SequenceService {
 
   public Long produceSequence(int param) {
-    long[] alticci = new long[param];
+    long[] alticci = new long[param + 3]; 
     long[] resultArray = arrayAlticitti(alticci);
-
-    return  resultArray[param - 1];
-    
+    return  resultArray[param];
 }
 public long[] arrayAlticitti (long[] alticci) {
         alticci[1] = alticci[2] = 1;
