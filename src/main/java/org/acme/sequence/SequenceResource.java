@@ -1,17 +1,19 @@
 package org.acme.sequence;
 
+import java.util.HashMap;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
 @Path("v1")
 public class SequenceResource {
+
     @GET
     @Path("/alticci/{param}")
-    // @Produces(MediaType.APPLICATION_JSON)
-    public Long squenceService(@PathParam("param") int param) {
-        if(param == 0L) return 0L;
-        long result = new SequenceService().produceSequence(param);
-        return result; 
+    public HashMap<String, Long> squenceService(@PathParam("param") int param) {
+        // new CacheService().load(param, result);
+        HashMap<String, Long> result = new SequenceService().renderResultHashMap(param);
+        return result;
     }
 }
