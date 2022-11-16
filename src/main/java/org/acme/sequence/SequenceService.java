@@ -2,8 +2,11 @@ package org.acme.sequence;
 
 import java.util.HashMap;
 
+import io.quarkus.cache.CacheResult;
+
 public class SequenceService {
 
+  @CacheResult(cacheName = "sequence-cache") 
   public Long produceSequence(int param) {
     long[] alticci = new long[param + 3];
     long[] resultArray = generateSequenceArray(alticci);
