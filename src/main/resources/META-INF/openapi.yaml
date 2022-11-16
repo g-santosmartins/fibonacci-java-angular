@@ -5,5 +5,30 @@ info:
   version: "1.0.0"
 
 servers:
-  - url: http://localhost:8080/api-docs
+  - url: http://localhost:4000/
     description: Development server mode selected
+
+paths:
+  /v1/alticci/{param}:
+    get:
+      responses:
+        200:
+          description: OK - number from the sequence returns
+          content:
+            application/json: {}
+
+        4XX:
+          description: Not found - Path or resource not found
+          content:
+            application/json: {}
+
+        5XX:
+          description: Server error - Returns the server internal error
+          content:
+            application/json: {}
+components:
+  schemas:
+    Path:
+      properties:
+        parameter:
+          type: number
