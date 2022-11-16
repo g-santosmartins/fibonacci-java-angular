@@ -48,12 +48,30 @@ $ git clone git@github.com:g-santosmartins/rest-alticci-api.git
 ```
 Make sure that you have quarkus CLI installed:
 
+```bash
+# To make sure, run:
+quarkus -v
+
+```
+
+If you've not installed quarkus CLI yet I strongly recommend this guide:
+
+### https://quarkus.io/get-started/
+
 Follow the steps below:
 ```bash
 # Install the dependencies
 quarkus dev
 
 ```
+
+
+## 🔖 Documentation OpenAPI 3 - Swagger
+
+You can get into the API documentation easly using this path:
+
+*Documentation link:* http://localhost:4000/api-docs
+
 
 Local Quarkus development server (GET):
 
